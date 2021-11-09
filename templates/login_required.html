@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>Login Redirect</title>
+    <div class="jumbotron">
+        <h1 style="color:red" class="display-4">Login Required!</h1>
+        <p class="lead">You're requested to login to visit this page.</p>
+        <hr class="my-4">
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="/admin/login" role="button">Click here to Login</a>
+        </p>
+      </div>
+{% endblock %}

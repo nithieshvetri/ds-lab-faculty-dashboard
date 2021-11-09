@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<title>Upload Form</title>
+<div class="flex-container">
+  <div class="alert alert-warning text-center" role="alert">
+    Make Sure the file you upload should be in Excel(i.e.,'.xlsx') Format and 
+    <br/> the first row next to column names must be blank or contains hidden values and 
+    <br/>the columns in the file are in the following order.
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover bg-light">
+      <thead>
+        <tr>
+          <th scope="col">Column</th>
+          <th scope="col">Faculty Data</th>
+          <th scope="col">Column</th>
+          <th scope="col">Faculty Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Sl. No.</td>
+          <th scope="row">14</th>
+          <td>FRP 1920</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Faculty Id</td>
+          <th scope="row">15</th>
+          <td>FRS 1920</td> 
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Faculty Name</td>
+          <th scope="row">16</th>
+          <td>FAP 2021 Score</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>Designation</td>
+          <th scope="row">17</th>
+          <td>Feedback 2021 Score</td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>Department</td>
+          <th scope="row">18</th>
+          <td>FRP 2021</td> 
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>Central Responsibility</td>
+          <th scope="row">19</th>
+          <td>FRS 2021</td>
+        </tr>
+        <tr>
+          <th scope="row">7</th>
+          <td>Status</td>
+          <th scope="row">20</th>
+          <td>FAP 2122 Score</td>
+        </tr>
+        <tr>
+          <th scope="row">8</th>
+          <td>Date of Joining</td>
+          <th scope="row">21</th>
+          <td>Feedback 2122 Score</td>
+        </tr>
+        <tr>
+          <th scope="row">9</th>
+          <td>Mobile Number</td>
+          <th scope="row">22</th>
+          <td>FRP 2122</td> 
+        </tr>
+        <tr>
+          <th scope="row">10</th>
+          <td>E-Mail</td>
+          <th scope="row">23</th>
+          <td>FRS 2122</td>
+        </tr>
+        <tr>
+          <th scope="row">11</th>
+          <td>Picture</td>
+          <th scope="row">24</th>
+          <td>Faculty List</td>
+        </tr>
+        <tr>
+          <th scope="row">12</th>
+          <td>FAP 1920 Score</td>
+          <th scope="row">25</th>
+          <td>About</td>
+        </tr>
+        <tr>
+          <th scope="row">13</th>
+          <td>Feedback 1920 Score</td>
+          <th scope="row">26</th>
+          <td>Search</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+<div class="container text-center">
+  <div class="alert alert-secondary text-center" role="secondary">
+<b>Update Form</b>
+  <hr>
+            <form method="POST" class="post-form" enctype="multipart/form-data">  
+                  {% csrf_token %}  
+                  {{ form }}
+                  <div>
+              <button type="submit" class="btn btn-success">Submit</button></div>
+            </form>  
+</div></div>
+{% endblock %}    
