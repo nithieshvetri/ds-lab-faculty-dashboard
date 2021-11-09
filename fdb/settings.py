@@ -111,15 +111,12 @@ WSGI_APPLICATION = 'fdb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'NAME': 'postgres',
-        'PASSWORD':'Nithiesh125600',
+        'HOST': '10.30.10.14',
+        'NAME': 'fdashboard',
+        'PASSWORD':'data@123',
         'PORT': '5432',
-        'USER': 'postgres',
-        'DISABLE_SERVER_SIDE_CURSORS': True,
-        'TEST': {
-            'NAME': 'mytestdatabase1',
-        },
+        'USER': 'data',
+
     }
 }
 
