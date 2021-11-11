@@ -17,12 +17,14 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
+from django.views.generic import TemplateView
 
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='admin/', permanent=False)),
+    path('', RedirectView.as_view(url='home/', permanent=False)),
     path('admin/', admin.site.urls),
     path('api/user/', include('user.urls')), # home url for user urls
     path('api/faculty/', include('faculty.urls')), # home url for faculty urls
+    path('home/',TemplateView.as_view(template_name='index.html')),
 ]
