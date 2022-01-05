@@ -1,16 +1,21 @@
-from core.models import Faculty
+from core.admin import Yearupdate
+from core.models import Faculty,Yearupdate
 from django.contrib.auth.decorators import login_required
 from django_filters.rest_framework import DjangoFilterBackend
 from faculty.filters import UserFilter
 from rest_framework import generics, authentication, permissions
-from faculty.serializers import FacultySerializer
+from faculty.serializers import FacultySerializer, YearSerializer
 from django.http import JsonResponse
 from django.shortcuts import render  
 from faculty.forms import FacultyForm, FacultyUpdateForm
 import pandas as pd
 import numpy as np
 import json
-        
+from django.db.models import Max,Min
+import decimal
+
+
+
 class FacultyListView(generics.ListAPIView):
     """API view for faculty lists"""
     queryset = Faculty.objects.all()
@@ -24,7 +29,7 @@ class FacultyListView(generics.ListAPIView):
 
 def check(a):
     if pd.isnull(a):
-        return np.nan_to_num(a)
+        return np.nan
     else:
         if isinstance(a, int):
             return a
@@ -57,18 +62,18 @@ def file_upload(request):
                         mobile_number = row[8],
                         email = row[9],
                         picture = row[10],
-                        FAP_1920_Score = check(row[11]),
-                        Feedback_1920_Score = check(row[12]),
-                        FRP_1920 = check(row[13]),
-                        FRS_1920 = check(row[14]),
-                        FAP_2021_Score = check(row[15]),
-                        Feedback_2021_Score = check(row[16]),
-                        FRP_2021 = check(row[17]),
-                        FRS_2021 = check(row[18]),
-                        FAP_2122_Score = check(row[19]),
-                        Feedback_2122_Score = check(row[20]),
-                        FRP_2122 = check(row[21]),
-                        FRS_2122 = check(row[22]),
+                        CAY_FAP_Score = check(row[11]),
+                        CAY_Feedback_Score = check(row[12]),
+                        CAY_FRP_Score = check(row[13]),
+                        CAY_FRS = check(row[14]),
+                        CAYM1_FAP_Score = check(row[15]),
+                        CAYM1_Feedback_Score = check(row[16]),
+                        CAYM1_FRP_Score = check(row[17]),
+                        CAYM1_FRS= check(row[18]),
+                        CAYM2_FAP_Score = check(row[19]),
+                        CAYM2_Feedback_Score = check(row[20]),
+                        CAYM2_FRP_Score= check(row[21]),
+                        CAYM2_FRS = check(row[22]),
                         Faculty_list = row[23],
                         About = row[24],
                         Search = row[25]
@@ -115,30 +120,30 @@ def file_update(request):
                         Faculty.objects.filter(faculty_id=df[faculty_id]).update(mobile_number=df[field_name])
                     elif field == 'picture':
                         Faculty.objects.filter(faculty_id=df[faculty_id]).update(picture=df[field_name])
-                    elif field == 'FAP_1920_Score':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FAP_1920_Score=check(df[field_name]))
-                    elif field == 'Feedback_1920_Score':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(Feedback_1920_Score=check(df[field_name]))
-                    elif field == 'FRP_1920':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRP_1920=check(df[field_name]))
-                    elif field == 'FRS_1920':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRS_1920=check(df[field_name]))
-                    elif field == 'FAP_2021_Score':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FAP_2021_Score=check(df[field_name]))
-                    elif field == 'Feedback_2021_Score':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(Feedback_2021_Score=check(df[field_name]))
-                    elif field == 'FRP_2021':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRP_2021=check(df[field_name]))
-                    elif field == 'FRS_2021':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRS_2021=check(df[field_name]))
-                    elif field == 'FAP_2122_Score':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FAP_2122_Score=check(df[field_name]))
-                    elif field == 'Feedback_2122':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(Feedback_2122=check(df[field_name]))
-                    elif field == 'FRP_2122':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRP_2122=check(df[field_name]))
-                    elif field == 'FRS_2122':
-                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(FRS_2122=check(df[field_name]))
+                    elif field == 'CAY_FAP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAY_FAP_Score=check(df[field_name]))
+                    elif field == 'CAY_Feedback_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAY_Feedback_Score=check(df[field_name]))
+                    elif field == 'CAY_FRP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAY_FRP_Score=check(df[field_name]))
+                    elif field == 'CAY_FRS':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAY_FRS=check(df[field_name]))
+                    elif field == 'CAYM1_FAP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM1_FAP_Score=check(df[field_name]))
+                    elif field == 'CAYM1_Feedback_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM1_Feedback_Score=check(df[field_name]))
+                    elif field == 'CAYM1_FRP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM1_FRP_Score=check(df[field_name]))
+                    elif field == 'CAYM1_FRS':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM1_FRS=check(df[field_name]))
+                    elif field == 'CAYM2_FAP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM2_FAP_Score=check(df[field_name]))
+                    elif field == 'CAYM2_Feedback_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM2_Feedback_Score=check(df[field_name]))
+                    elif field == 'CAYM2_FRP_Score':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM2_FRP_Score=check(df[field_name]))
+                    elif field == 'CAYM2_FRS':
+                        Faculty.objects.filter(faculty_id=df[faculty_id]).update(CAYM2_FRS=check(df[field_name]))
                     elif field == 'Faculty_List':
                         Faculty.objects.filter(faculty_id=df[faculty_id]).update(Faculty_list=df[field_name])
                     elif field == 'About':
@@ -178,3 +183,32 @@ def status(request):
     """API view for status list"""
     data = list(Faculty.objects.values_list('status', flat=True).distinct().order_by('status')) # wrap in list(), because QuerySet is not JSON serializable
     return JsonResponse(data, safe=False)
+
+def minmax(request):  
+    """View for updating existing data from the file"""
+    FAP_MIN = Faculty.objects.all().filter(CAY_FAP_Score__isnull=False).exclude(CAY_FAP_Score='NaN').aggregate(Min('CAY_FAP_Score'))
+    FAP_MAX = Faculty.objects.all().filter(CAY_FAP_Score__isnull=False).exclude(CAY_FAP_Score='NaN').aggregate(Max('CAY_FAP_Score'))
+    FEEDBACK_MIN = Faculty.objects.all().filter(CAY_Feedback_Score__isnull=False).exclude(CAY_Feedback_Score='NaN').aggregate(Min('CAY_Feedback_Score'))
+    FEEDBACK_MAX = Faculty.objects.all().filter(CAY_Feedback_Score__isnull=False).exclude(CAY_Feedback_Score='NaN').aggregate(Max('CAY_Feedback_Score'))
+    FRP_MIN = Faculty.objects.all().filter(CAY_FRP_Score__isnull=False).exclude(CAY_FRP_Score='NaN').aggregate(Min('CAY_FRP_Score'))
+    FRP_MAX = Faculty.objects.all().filter(CAY_FRP_Score__isnull=False).exclude(CAY_FRP_Score='NaN').aggregate(Max('CAY_FRP_Score'))
+    FRS_MIN = Faculty.objects.all().filter(CAY_FRS__isnull=False).exclude(CAY_FRS='NaN').aggregate(Min('CAY_FRS'))
+    FRS_MAX = Faculty.objects.all().filter(CAY_FRS__isnull=False).exclude(CAY_FRS='NaN').aggregate(Max('CAY_FRS'))   
+        
+    data=[FAP_MIN,FAP_MAX,
+            FEEDBACK_MIN,FEEDBACK_MAX,
+            FRP_MIN,FRP_MAX,
+            FRS_MIN,FRS_MAX,
+    ]
+    return JsonResponse(data, safe=False)
+ 
+
+class AcademicYearView(generics.ListAPIView):
+    """API view for Academic years"""
+    queryset = Yearupdate.objects.all()
+    serializer_class = YearSerializer
+    # authentication_classes = (authentication.TokenAuthentication,)
+    # permission_classes = (permissions.IsAuthenticated,)
+    # filter_backends = [DjangoFilterBackend,]
+    # filterset_class = UserFilter
+    # filterset_fields = ['faculty_id', 'name', 'designation', 'department', 'central_responsibility', 'status', 'date_of_joining', 'mobile_number', 'email' ]

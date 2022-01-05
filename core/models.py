@@ -60,21 +60,29 @@ class Faculty(models.Model):
     mobile_number = models.CharField(max_length=20, null=True, default=None,verbose_name="Mobile Number")
     email = models.EmailField(verbose_name="E-Mail")
     picture = models.URLField(max_length=400, default=None,null=True, verbose_name="Image")
-    FAP_1920_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="FAP 19-20 Score")
-    Feedback_1920_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="Feedback 19-20 Score")
-    FRP_1920 = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="FRP 19-20")
-    FRS_1920 = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="FRS 19-20")
-    FAP_2021_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="FAP 20-21 Score")
-    Feedback_2021_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="Feedback 20-21 Score")
-    FRP_2021 = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="FRP 20-21")
-    FRS_2021 = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="FRS 20-21")
-    FAP_2122_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="FAP 21-22 Score")
-    Feedback_2122_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="Feedback 21-22 Score")
-    FRP_2122 = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="FRP 21-22")
-    FRS_2122 = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="FRS 21-22")
+    CAY_FAP_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAY FAP Score")
+    CAY_Feedback_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAY Feedback Score")
+    CAY_FRP_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAY FRP")
+    CAY_FRS = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="CAY FRS")
+    CAYM1_FAP_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM1 FAP Score")
+    CAYM1_Feedback_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM1 Feedback Score")
+    CAYM1_FRP_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM1 FRP")
+    CAYM1_FRS = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="CAYM1 FRS")
+    CAYM2_FAP_Score = models.DecimalField(max_digits=4, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM2 FAP Score")
+    CAYM2_Feedback_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM2 Feedback Score")
+    CAYM2_FRP_Score = models.DecimalField(max_digits=3, decimal_places=2, null=True,blank=True, default=None, verbose_name="CAYM2 FRP")
+    CAYM2_FRS = models.DecimalField(max_digits=6, decimal_places=0, blank=True, default=None, null=True,verbose_name="CAYM2 FRS")
     Faculty_list = models.TextField(max_length=500, null=True, default=None, verbose_name="Faculty List")
     About = models.TextField(max_length=500, null=True, default=None, verbose_name="About")
     Search = models.TextField(max_length=500, null=True, default=None, verbose_name="Search")
     def __str__(self):
         return self.faculty_id
 
+
+
+class Yearupdate(models.Model):
+    cay=models.CharField(max_length=20, null=False, default=None,verbose_name="CAY")
+    caym1=models.CharField(max_length=20, null=True, default=None,verbose_name="CAYM1")
+    caym2=models.CharField(max_length=20, null=True, default=None,verbose_name="CAYM2")
+    def __str__(self):
+        return "ACADEMIC YEAR"

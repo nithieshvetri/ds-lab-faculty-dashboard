@@ -12,7 +12,9 @@ urlpatterns = [
     path('designation/', views.designation,), # listing all designation
     path('cr/', views.cen_res,), # listing central responsibility
     path('status/', views.status,), # listing status
+    path('minmax/', views.minmax,), # api for slider minimum & maximum
     path('upload/', views.file_upload), # uploading file for uploading new data 
     path('fileupdate/', views.file_update), # upload file for updating existing data
+    path('academic/',views.AcademicYearView.as_view())
 
 ]

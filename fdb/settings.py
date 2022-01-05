@@ -15,13 +15,13 @@ import os
 from django.apps import AppConfig
 # import django_heroku
 
-AppConfig.default = False
+# AppConfig.default = False
 DATE_FORMAT = '%d-%m-%y'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-TEMPLATE_BUILD=os.path.join(BASE_DIR,'final/build')
+TEMPLATE_BUILD=os.path.join(BASE_DIR,'build')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -30,20 +30,20 @@ TEMPLATE_BUILD=os.path.join(BASE_DIR,'final/build')
 SECRET_KEY = 'django-insecure--^hdlu!nk1*=g2+t$53suh^#nbt4hu%(bxfhbw#ag@%^pdvrk7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    'whitenoise.runserver_nostatic',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'whitenoise.runserver_nostatic',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'import_export',
     'compressor',
     'crispy_forms',
+        'rest_framework_simplejwt',
+        
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 COMPRESS_PRECOMPILERS = (('text/x-scss', 'django_libsass.SassCompiler'),)
@@ -66,11 +69,17 @@ STATICFILES_FINDERS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,7 +87,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     
 ]
 
@@ -113,11 +121,11 @@ WSGI_APPLICATION = 'fdb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '10.30.10.14',
-        'NAME': 'fdashboard',
-        'PASSWORD':'data@123',
+        'HOST': 'localhost',
+        'NAME': 'THAMZ',
+        'PASSWORD':'Nithiesh125600',
         'PORT': '5432',
-        'USER': 'data',
+        'USER': 'postgres',
 
     }
 }
@@ -168,8 +176,8 @@ STATIC_URL = '/static/'
 #location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # location where you will store your static files
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'project_name/static') ,BASE_DIR/'final/build/static']
-
+STATICFILES_DIRS = [BASE_DIR/'build/static']
+# os.path.join(BASE_DIR,'project_name/static') 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
@@ -185,3 +193,38 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # django_heroku.settings(locals())
+
+from datetime import timedelta
+
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    # 'SIGNING_KEY': settings.SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+    'LEEWAY': 0,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}

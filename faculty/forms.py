@@ -12,18 +12,18 @@ MODEL_FIELDS = [
     ('date_of_joining', 'date_of_joining'),
     ('mobile_number ', 'mobile_number '),
     ('picture', 'picture'),
-    ('FAP_1920_Score', 'FAP_1920_Score'),
-    ('Feedback_1920_Score', 'Feedback_1920_Score'),
-    ('FRP_1920', 'FRP_1920'),
-    ('FRS_1920', 'FRS_1920'),
-    ('FAP_2021_Score', 'FAP_2021_Score'),
-    ('Feedback_2021_Score', 'Feedback_2021_Score'),
-    ('FRP_2021', 'FRP_2021'),
-    ('FRS_2021', 'FRS_2021'),
-    ('FAP_2122_Score', 'FAP_2122_Score'),
-    ('Feedback_2122_Score', 'Feedback_2122_Score'),
-    ('FRP_2122', 'FRP_2122'),
-    ('FRS_2122', 'FRS_2122'),
+    ('CAY_FAP_Score', 'CAY_FAP_Score'),
+    ('CAY_Feedback_Score', 'CAY_Feedback_Score'),
+    ('CAY_FRP_Score', 'CAY_FRP_Score'),
+    ('CAY_FRS', 'CAY_FRS'),
+    ('CAYM1_FAP_Score', 'CAYM1_FAP_Score'),
+    ('CAYM1_Feedback_Score', 'CAYM1_Feedback_Score'),
+    ('CAYM1_FRP_Score', 'CAYM1_FRP_Score'),
+    ('CAYM1_FRS', 'CAYM1_FRS'),
+    ('CAYM2_FAP_Score', 'CAYM2_FAP_Score'),
+    ('CAYM2_Feedback_Score', 'CAYM2_Feedback_Score'),
+    ('CAYM2_FRP_Score', 'CAYM2_FRP_Score'),
+    ('CAYM2_FRS', 'CAYM2_FRS'),
     ("Faculty_List","Faculty_List"),
     ('About', 'About'),
     ("Search", "Search")
@@ -34,3 +34,9 @@ class FacultyUpdateForm(forms.Form):
     field= forms.CharField(label='Choose the field to update', widget=forms.Select(choices=MODEL_FIELDS))
     field_name = forms.CharField(label="Field name as in the sheet")
     file = forms.FileField(label="Upload the file")
+
+class YearUpdateForm(forms.Form):
+    """Form for uploading faculty datasheet to update existing data"""
+    CAY = forms.CharField(label="Enter the Current Academic Year (CAY) ")
+    CAYM1= forms.CharField(label='Enter the Previous Academic Year (CAY-1)')
+    CAYM2 = forms.CharField(label="Enter the Previous of Previous Academic Year(CAY-2)")

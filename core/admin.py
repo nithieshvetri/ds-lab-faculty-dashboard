@@ -28,7 +28,14 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(models.User, UserAdmin)
 
 @admin.register(models.Faculty)
+
+
 class FacultyAdmin(admin.ModelAdmin):
   list_display = ['faculty_id', 'name', 'email']
   list_filter = ('department',)
   search_fields = ("faculty_id__startswith", )
+
+
+@admin.register(models.Yearupdate)
+class Yearupdate(admin.ModelAdmin):
+    pass
