@@ -5,9 +5,9 @@ services:
     build: .
     restart: unless-stopped
     image: frontend
-    command: sh -c "python manage.py makemigrations --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000 "
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - db-ss:/code
+      - db-datas:/code
     ports:
       - "8000:8000"
 
@@ -19,19 +19,13 @@ services:
     restart: unless-stopped
     ports:
       - 5432:5432
+    volumes:
+      - db-datas:/var/lib/postgresql
     environment:
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
 
-  # migration:
-  #   image: frontend
-  #   command: sh -c "echo yes | python manage.py collectstatic"
-  #     - db-ss:/code
-  #   depends_on:
-  #     - db
-
 volumes:
-  db-ss:
+  db-datas:
 
 
-#python manage.py makemigrations core && python manage.py migrate && 
